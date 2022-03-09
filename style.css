@@ -1,0 +1,46 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+}
+
+#app {
+  background-color: black;
+  width: 400px;
+  height: 600px;
+}
+.row {
+  display: flex;
+  height: 100px;
+}
+
+input[type="text"] {
+  font-size: 1.5rem;
+  padding: 0 20px;
+}
+
+button {
+  font-size: 1.2rem;
+}
+button,
+input[type="text"] {
+  /*Takes a full width availabl */
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+}
+button:hover {
+  background-color: rgba(240, 248, 255, 0.685);
+  cursor: pointer;
+  color: black;
+}
+.special {
+  flex: 2;
+}

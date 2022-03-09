@@ -1,40 +1,78 @@
-function Addition(a, b) {
-  // it takes Two numbers and Add Them
+//----------- Variables -----------------//
 
-  return a + b;
+var screen = document.getElementById("screen") ;
+var numChar ; // total number of typed Characters .
+var currentChar , previousChar ; //Store Previous and current typed character
+var operations = ['+' , '-' , '*' , '/'] ;
+//-----------Functions -----------------//
+
+function clearScreen() {
+// It clears Calculatrice Screen .
+  screen.value = "" ; 
+
 }
 
-console.log(Addition(3, 3));
+function display(x) {
+  // it adds one to the existing value .
+  screen.value += x ; 
+  // Assigning The length of the input value (num of Character)
+  numChar = screen.value.length ;
+  
+  currentChar = x ;
 
-function Soustraire(a, b) {
-  // it takes Two numbers and Substract Them
+  // console.log("Current " + currentChar) ;
 
-  return a - b;
+  getPreviousChar() ;
+
 }
 
-console.log(Soustraire(3, 3));
+function calculate() {
+  // The eval function evaluates our string code and can do with it mathematical operations
+  screen.value = eval(screen.value) ; 
 
-function Multiplication(a, b) {
-  // it takes Two numbers and Substract Them
-
-  return a * b;
 }
 
-console.log(Multiplication(3, 3));
+function getPreviousChar() {
+  //The substring() method extracts characters, between two indices (positions), from a string, and returns the substring.
+ 
+  previousChar =  screen.value.substring(numChar-2,numChar-1);
+  checkSyntax() ;
 
-function Division(a, b) {
-  // it takes Two numbers and Divide Them
-
-  return a / b;
 }
 
-console.log(Division(3, 3));
+function checkSyntax() {
 
-function operate() {
-    let operator = prompt("Please Enter an Operator");
-    let number1 = prompt("Please Enter First Number");
-    let number2 = prompt("Please Enter Second Number Number");
+  if(operations.includes(currentChar) && numChar == 1) {
+      removerChar();
 
-    console.log("${number1} +  ${operator} + ${number2}" );
+  }
+  if(operations.includes(previousChar) && operations.includes(currentChar)) {
+
+    if(previousChar == currentChar){
+      removerChar() ; 
+    }else {
+      // it tkes the penultimate sign 
+      overWrite();
+    }
+    
+  }
 }
+// Overwriting function .
+function overWrite() {
+
+  screen.value = screen.value.slice(0,numChar - 2) + screen.value.slice(numChar-1) ;
+
+}
+
+// Remove Function 
+function removerChar() {
+
+  screen.value.substring(0,numChar-1);
+
+}
+
+
+
+
+
 
