@@ -1,78 +1,131 @@
-//----------- Variables -----------------//
+// alert("js running");
+//? ----------------- variables -------------//
+var queue = [];
+var input = 0;
+var screen = document.getElementById("screen");
+var clear =document.getElementById("clear");
+clear.addEventListener('click',clearScreen); 
+var suprimer = document.getElementById("clear");
+suprimer.addEventListener('click',suprimer) ;
 
-var screen = document.getElementById("screen") ;
-var numChar ; // total number of typed Characters .
-var currentChar , previousChar ; //Store Previous and current typed character
-var operations = ['+' , '-' , '*' , '/'] ;
-//-----------Functions -----------------//
+//----------------- functions -------------//
+//  console.log(typeof screen);//Object
 
-function clearScreen() {
-// It clears Calculatrice Screen .
-  screen.value = "" ; 
-
-}
-
-function display(x) {
-  // it adds one to the existing value .
-  screen.value += x ; 
-  // Assigning The length of the input value (num of Character)
-  numChar = screen.value.length ;
-  
-  currentChar = x ;
-
-  // console.log("Current " + currentChar) ;
-
-  getPreviousChar() ;
-
-}
-
-function calculate() {
-  // The eval function evaluates our string code and can do with it mathematical operations
-  screen.value = eval(screen.value) ; 
-
-}
-
-function getPreviousChar() {
-  //The substring() method extracts characters, between two indices (positions), from a string, and returns the substring.
+//! on affiche  les chiffres dans un screen . 5 + 6
+function display(num) {
  
-  previousChar =  screen.value.substring(numChar-2,numChar-1);
-  checkSyntax() ;
-
+  if (num != ".") {
+    input += num;
+    screen.value += num;
+    console.log(`input lors de l'affichage : ${input}`);// 5
+  }
 }
 
-function checkSyntax() {
+// ! on va supprimer les donnés dans le screen
+function clearScreen() {
+  screen.value = ""; // Empty value on screen
+  queue = []; // queue Array Empty .
+  input = 0; 
+  console.log(`input lors de display : ${input}`);
+}
 
-  if(operations.includes(currentChar) && numChar == 1) {
-      removerChar();
+// !! add input on the queue comme un array
+function AddToQueue(input) {
+  queue.push(input); // The argument gets push to the queue array
+}
 
+// ! une fois cliquer sur les + , - , / , * .
+
+function operation(arg) {
+
+  if (input !== 0) { // "5" => 5
+    input = parseFloat(input); 
+    AddToQueue(input);
+    AddToQueue(arg); // [(5,+)]
+    console.log(`queue lors de l'opération :   ${queue}`);
+    screen.value += arg; // Adding the operator to the array .
+    input = 0;
+    console.log(`input lors de l'operation : ${input}`);
   }
-  if(operations.includes(previousChar) && operations.includes(currentChar)) {
+}
 
-    if(previousChar == currentChar){
-      removerChar() ; 
-    }else {
-      // it tkes the penultimate sign 
-      overWrite();
-    }
+// ! une fois cliquer sur = va calculer le résultat
+function caculerScreen(resultat) {
+  // * pour add input sur la queue
+  if (input !== 0) {
+    input = parseFloat(input); // 
+    AddToQueue(input); //[5,+,6]
+    console.log(`input dans fonction calculer :   ${input}`);
+    console.log(`queue dans fonction calculer :   ${queue}`);
+  }
+  var answer = resultat[0];
+  var Diviser_zero = true;
+
+  for (var i = 2; i < resultat.length; i++) {
+
+    switch (queue[i - 1]) {
+
+    case "+":
+
+        answer += resultat[i]; // answer = answer + resulat[2] .
+        console.log(`queue[i-1] boucle:   ${queue[i - 1]}`);
+        console.log(`resultat[i] :   ${resultat[i]}`);
+        break;
+
+    case "-":
     
+        answer -= resultat[i];
+        console.log(`queue[i-1] boucle:   ${queue[i - 1]}`);
+        console.log(`resultat[i] :   ${resultat[i]}`);
+        
+        break;
+
+    case "*":
+
+        answer *= resultat[i];
+        console.log(`queue[i-1] boucle:   ${queue[i - 1]}`);
+        console.log(`resultat[i] :   ${resultat[i]}`);
+        break;
+
+    case "/":
+        //  .
+        if (resultat[i] === 0) {
+          Diviser_zero = false;
+        } else {
+          answer /= resultat[i];
+          console.log(`queue[i-1] boucle:   ${queue[i - 1]}`);
+          console.log(`resultat[i] :   ${resultat[i]}`);
+        }
+        break;
+    default:
+        console.log(`the condition is not avalaible`);
+        break;
+    }
+    console.log(`the answer is :   ${answer}`);
+  }
+  if (Diviser_zero === false) {
+    clearScreen();
+    screen.value = "ERROR";
+    console.log(`the resultat is ${queue}`);
+  } else {
+    screen.value = answer;
+    input = answer;
+    queue = [];
+    console.log(`the resultat is ${answer}`);
   }
 }
-// Overwriting function .
-function overWrite() {
 
-  screen.value = screen.value.slice(0,numChar - 2) + screen.value.slice(numChar-1) ;
-
+// ! suprimer le dernier chiffre
+function suprimer() {
+  screen.value = screen.value.substring(0, screen.value.length - 1);
+  input = input.substring(0, input.length - 1);
 }
 
-// Remove Function 
-function removerChar() {
-
-  screen.value.substring(0,numChar-1);
-
+// ! pour tester le code sur le console
+function consovarest() {
+  console.log(`######## console en general ########`);
+  console.log(`input en général : ${input}`);
+  console.log(`queue de facon générale :   ${queue}`);
+  // console.log(`add to queue input parsefloat :   ${AddToQueue(input)}`);
+  console.log(`####################################`);
 }
-
-
-
-
-
-

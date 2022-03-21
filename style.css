@@ -1,46 +1,44 @@
+
 body {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
   display: flex;
   height: 100vh;
   justify-content: center;
   align-items: center;
-  background-color: aquamarine;
 }
-
 #app {
-  background-color: black;
-  width: 400px;
+  background-color: #3f51b4;
+  width: 430px;
   height: 600px;
 }
 .row {
   display: flex;
   height: 100px;
 }
-
-input[type="text"] {
-  font-size: 1.5rem;
-  padding: 0 20px;
-}
-
+input[type="text"],
 button {
-  font-size: 1.2rem;
-}
-button,
-input[type="text"] {
-  /*Takes a full width availabl */
   flex: 1;
   border: none;
   outline: none;
-  background-color: black;
-  color: white;
+}
+input[type="text"] {
+  background-color: rgb(15, 12, 12);
+  color: aliceblue;
+  font-size: 2em;
+  padding: 20px 20px;
+}
+button {
+  background-color: rgb(23, 167, 135);
+  color: aliceblue;
+  font-size: 1.4em;
+  border: 1px solid black;
 }
 button:hover {
-  background-color: rgba(240, 248, 255, 0.685);
+  background-color: black;
   cursor: pointer;
-  color: black;
 }
-.special {
+.zero {
   flex: 2;
 }
